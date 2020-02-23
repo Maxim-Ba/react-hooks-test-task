@@ -1,37 +1,54 @@
-import React, { useState, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import './App.css';
 import { RightComponent } from './components/rightComponent/RightComponent';
-import { LeftComponent } from './components/leftComponent/LeftComponent';
-import { Button } from './button/Button';
+import { Button } from './components/button/Button';
 import { Time } from './components/time/Time';
 import { Reducer } from './reducer/Reducer';
+import { Footer } from './components/Footer/Footer';
+import {CSSTransition} from 'react-transition-group';
 
-
-const exportTime = React.createContext(new Date());
+const exportTime = React.createContext(Date.now());
 function App() {
-  const  initialState={
-    right:[],
-    left:[],
-  }
-  const [state ,dispatch] = useReducer(Reducer, initialState)
-  // const listsValues = React.createContext(state)
-  console.log(state)
+  const initialState = {
+    right: [],
+    left: [],
+    selectedR: null,
+    selectedL: null
+  };
+  const [state, dispatch] = useReducer(Reducer, initialState);
   return (
-        <div className="App ">
-          <header className="App-header">
-          </header>
-          <section className='App__wraper'>
-            <RightComponent dispatch={dispatch} value={state.right} side='right'/>
-            <div className='btn-group-vertical'>
-              <Button direction='>' dispatch={dispatch} />
-              <Button direction='<' dispatch={dispatch}/>
-            </div>
-            <RightComponent dispatch={dispatch} value={state.left} side='left'/>
-          </section>
-          {/* <Time /> */}
+    <CSSTransition  
+      in={true}
+      appear={true}
+      timeout={800}
+      classNames="first-transition"
+      
+    >
+    <div className="App ">
+      <header className="App-header">
+        <h1>Test task</h1>
+      </header>
+      <section className='App__wraper flex-column  flex-sm-row'>
+        <RightComponent dispatch={dispatch} value={state.right} side='right' />
+        <CSSTransition
+          appear={true}
+          in={true}
+          timeout={1000}
+          classNames="item-button-transition"
+        >
+        <div className='btn-group-vertical'>
+          <Button direction='>' dispatch={dispatch} selectedR={state.selectedR} />
+          <Button direction='<' dispatch={dispatch} selectedL={state.selectedL} />
         </div>
+        </CSSTransition>
+        <RightComponent dispatch={dispatch} value={state.left} side='left' />
+      </section>
+      <Time />
+      <Footer />
+    </div>
+    </CSSTransition  >
   );
 }
 
 export default App;
-export { exportTime }
+export { exportTime };

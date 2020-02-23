@@ -3,22 +3,17 @@ import { exportTime } from '../../App'
 
 export const Time = () => {
   const value = useContext(exportTime)
-
   const [time, setTime] = useState(value)
-
   useEffect(() => {
     setTimeout(() => {
-      setTime(time.getSeconds() + 1)
+      setTime(time + 1000)
     }, 1000)
   }, [time])
-
-  let timeContainerForRender =  time
-  console.log(time, timeContainerForRender.getSeconds())
+  let date = new Date(time)
   return (
     <div>
       <p>TIMER</p>
-      <p>NOW IS: {time.getSeconds()}</p>
+      <p>NOW IS: {`${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}`}</p>
     </div>
-
   )
 }

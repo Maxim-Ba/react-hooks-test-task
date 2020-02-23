@@ -5,6 +5,8 @@ const DELETE_IN_RIGHT = 'DELETE_IN_RIGHT';
 const DELETE_IN_LEFT = 'DELETE_IN_LEFT';
 const SELECT_R = 'SELECT_R';
 const SELECT_L = 'SELECT_L';
+const ADD_TO_SELECTEDR = 'ADD_TO_SELECTEDR'
+const ADD_TO_SELECTEDL = 'ADD_TO_SELECTEDL'
 
 const Reducer = (state, action) => {
   switch (action.type) {
@@ -22,6 +24,7 @@ const Reducer = (state, action) => {
         right: [...state.right].filter((item) => {
           return (!item.select)
         })
+        
       }
     case DELETE_IN_LEFT:
       return {
@@ -35,21 +38,31 @@ const Reducer = (state, action) => {
         ...state,
         right: [...state.right].map((item, index) => {
           if (index === action.index) {
-            return{...item, select:true}
+            return { ...item, select: true }
           }
-          return {...item, select:false}
+          return { ...item, select: false }
         })
       }
-      case SELECT_L:
-        return {
-          ...state,
-          left: [...state.left].map((item, index) => {
-            if (index === action.index) {
-              return{...item, select:true}
-            }
-            return {...item, select:false}
-          })
-        }
+    case SELECT_L:
+      return {
+        ...state,
+        left: [...state.left].map((item, index) => {
+          if (index === action.index) {
+            return { ...item, select: true }
+          }
+          return { ...item, select: false }
+        })
+      }
+    case ADD_TO_SELECTEDR:
+      return {
+        ...state, 
+        selectedR: action.item
+      }
+    case ADD_TO_SELECTEDL:
+      return {
+        ...state,
+          selectedL: action.item
+      }
     default:
       return state;
   }
