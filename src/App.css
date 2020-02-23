@@ -1,6 +1,9 @@
 .App {
   text-align: center;
   padding-bottom: 30px;
+  background-image: url(./pic/logo512.png);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .App-header{
   padding-top: 10px;
